@@ -1376,18 +1376,19 @@ namespace hicbit {
         // 119 120
         // let SCL = 119;
         // let SDL = 120;
-        pins.setPull(DigitalPin.P20, PinPullMode.PullUp);
+        pins.digitalWritePin(DigitalPin.P20, 1);
+
         return 22;
     }
 
-    //% weight=90 block="NFC|接收值2"
+    //% weight=90 block="NFC|接收值0"
     //% group="NFC"
     //% color=#4B974A
     export function nfc22IIC(): number {
         // 119 120
         // let SCL = 119;
         // let SDL = 120;
-        pins.setPull(DigitalPin.P20, PinPullMode.PullDown);
+        pins.digitalWritePin(DigitalPin.P20, 0);
         return 11;
     }
 }
