@@ -29,10 +29,46 @@ namespace ADXL345 {
     //% weight=50 blockGap=8
     export function getX(): string {
         pins.i2cWriteNumber(COMMAND_I2C_ADDRESS, 0x32, NumberFormat.Int8BE)
-        let left = pins.i2cReadNumber(COMMAND_I2C_ADDRESS, NumberFormat.Int8BE)
+        let left = pins.i2cReadNumber(0x32, NumberFormat.Int8BE)
 
         pins.i2cWriteNumber(COMMAND_I2C_ADDRESS, 0x33, NumberFormat.Int8BE)
-        let right = pins.i2cReadNumber(COMMAND_I2C_ADDRESS, NumberFormat.Int8BE)
+        let right = pins.i2cReadNumber(0x33, NumberFormat.Int8BE)
+        return left + ":" + right
+    }
+
+    //% blockId="ADXL345_getX2" block="陀螺仪|读取X轴2"
+    //% weight=50 blockGap=8
+    export function getX2(): string {
+        let left = pins.i2cReadNumber(0x32, NumberFormat.Int8BE)
+        let right = pins.i2cReadNumber(0x33, NumberFormat.Int8BE)
+        return left + ":" + right
+    }
+
+    //% blockId="ADXL345_getX3" block="陀螺仪|读取X轴3"
+    //% weight=50 blockGap=8
+    export function getX3(): string {
+        pins.i2cReadNumber(COMMAND_I2C_ADDRESS, NumberFormat.Int8BE)
+        let left = pins.i2cReadNumber(0x32, NumberFormat.Int8BE)
+        pins.i2cReadNumber(COMMAND_I2C_ADDRESS, NumberFormat.Int8BE)
+        let right = pins.i2cReadNumber(0x33, NumberFormat.Int8BE)
+        return left + ":" + right
+    }
+
+    //% blockId="ADXL345_getX4" block="陀螺仪|读取X轴4"
+    //% weight=50 blockGap=8
+    export function getX4(): string {
+        pins.i2cReadNumber(COMMAND_I2C_ADDRESS, NumberFormat.Int8BE)
+        let left = pins.i2cReadNumber(0x32, NumberFormat.Int8BE)
+        let right = pins.i2cReadNumber(0x33, NumberFormat.Int8BE)
+        return left + ":" + right
+    }
+
+    //% blockId="ADXL345_getX5" block="陀螺仪|读取X轴5"
+    //% weight=50 blockGap=8
+    export function getX5(): string {
+        pins.i2cReadNumber(COMMAND_I2C_ADDRESS, NumberFormat.Int8BE)
+        let left = pins.i2cReadNumber(0x32, NumberFormat.Int8BE)
+        let right = pins.i2cReadNumber(0x33, NumberFormat.Int8BE)
         return left + ":" + right
     }
 
