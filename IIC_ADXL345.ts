@@ -25,4 +25,15 @@ namespace ADXL345 {
         return pins.i2cReadNumber(COMMAND_I2C_ADDRESS, NumberFormat.Int8BE)
     }
 
+    //% blockId="ADXL345_getX" block="陀螺仪|读取X轴"
+    //% weight=50 blockGap=8
+    export function getX(): string {
+        pins.i2cWriteNumber(COMMAND_I2C_ADDRESS, 0x32, NumberFormat.Int8BE)
+        let left = pins.i2cReadNumber(COMMAND_I2C_ADDRESS, NumberFormat.Int8BE)
+
+        pins.i2cWriteNumber(COMMAND_I2C_ADDRESS, 0x33, NumberFormat.Int8BE)
+        let right = pins.i2cReadNumber(COMMAND_I2C_ADDRESS, NumberFormat.Int8BE)
+        return left + ":" + right
+    }
+
 }
