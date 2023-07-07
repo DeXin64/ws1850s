@@ -12,6 +12,7 @@
         "main.blocks",
         "main.ts",
         "IIC_1650.ts",
+        "IIC_ADXL345.ts",
         "MFRC522.ts"
     ],
     "testFiles": [
