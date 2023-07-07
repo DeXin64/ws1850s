@@ -10,7 +10,9 @@
     "files": [
         "README.md",
         "main.blocks",
-        "main.ts"
+        "main.ts",
+        "IIC_1650.ts",
+        "MFRC522.ts"
     ],
     "testFiles": [
         "test.ts"
