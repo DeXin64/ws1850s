@@ -1369,7 +1369,7 @@ namespace hicbit {
         return 255 - Math.round(adValue);
     }
 
-    //% weight=90 block="NFC|接收值"
+    //% weight=90 block="NFC|接收值1"
     //% group="NFC"
     //% color=#4B974A
     export function nfcIIC(): number {
@@ -1377,8 +1377,17 @@ namespace hicbit {
         // let SCL = 119;
         // let SDL = 120;
         pins.setPull(DigitalPin.P20, PinPullMode.PullUp);
-        basic.pause(1000);
-        pins.setPull(DigitalPin.P20, PinPullMode.PullDown);
         return 22;
+    }
+
+    //% weight=90 block="NFC|接收值2"
+    //% group="NFC"
+    //% color=#4B974A
+    export function nfc22IIC(): number {
+        // 119 120
+        // let SCL = 119;
+        // let SDL = 120;
+        pins.setPull(DigitalPin.P20, PinPullMode.PullDown);
+        return 11;
     }
 }
