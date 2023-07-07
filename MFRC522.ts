@@ -1,7 +1,7 @@
 /**
   * MFRC522 Block
   */
-//% color="#275C6B" weight=100 icon="\uf2bb" block="MFRC522 RFID"
+//% color="#275C6B" weight=100 icon="\uf136" block="MFRC522 RFID"
 namespace MFRC522 {
     let Type2=0
     const BlockAdr: number[] = [8, 9, 10]
