@@ -7,7 +7,7 @@
 /**
  * TM1650 digit Display
  */
-//% weight=100 color=#64C800 icon="\uf136" block="IIC_24C02"
+//% weight=100 color=#64C800 icon="\uf136" block="IIC_24C02_"
 namespace IIC_24C02 {
 
     // 设备地址
