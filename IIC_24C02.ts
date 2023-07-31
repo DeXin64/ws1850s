@@ -25,7 +25,7 @@ namespace IIC_24C02 {
     //% help=pins/i2c-read-number blockGap=8 advanced=true
     //% blockId=IIC_24C02_readnumber block="24C02数据读取|数据格式 %format" weight=7
     //% weight=50 blockGap=8
-    export function readNumber(address: number, format: NumberFormat, repeated?: boolean): number {
+    export function readNumber(format: NumberFormat): number {
         pins.i2cWriteNumber(IIC_24C02_ADDRESS, 0x00, NumberFormat.UInt8BE, true)
         let data = pins.i2cReadNumber(IIC_24C02_ADDRESS, format, false)
         return data
