@@ -17,7 +17,7 @@ namespace IIC_24C02 {
     //% blockId=IIC_24C02_writenumber block="24C02数据写入|写入数值 %value|数据格式 %format"
     //% weight=50 blockGap=8
     export function writeNumber(value: number, format: NumberFormat): void {
-        let buf = pins.createBuffer(pins.sizeOf(format))
+        let buf = pins.createBuffer(pins.sizeOf(NumberFormat.UInt32BE))
         buf.setNumber(format, 0, value)
         pins.i2cWriteBuffer(IIC_24C02_ADDRESS, buf, false)
     }
@@ -27,7 +27,7 @@ namespace IIC_24C02 {
     //% weight=50 blockGap=8
     export function readNumber(format: NumberFormat): number {
         pins.i2cWriteNumber(IIC_24C02_ADDRESS, 0x00, NumberFormat.UInt8BE, true)
-        let data = pins.i2cReadNumber(IIC_24C02_ADDRESS, format, false)
+        let data = pins.i2cReadNumber(IIC_24C02_ADDRESS, NumberFormat.UInt16BE, false)
         return data
     }
 
