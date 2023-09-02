@@ -23,7 +23,7 @@ namespace C78465 {
 
 
     //% help=pins/i2c-read-number blockGap=8 advanced=true
-    //% blockId=C78465_readColorNumber block="读取颜色值|X" weight=7
+    //% blockId=C78465_readColorNumber block="读取颜色值|%X色通道" weight=7
     //% weight=50 blockGap=8
     export function readColorNumber(x: ChannelEnum): number {
         pins.i2cWriteNumber(
