@@ -31,6 +31,7 @@ namespace VEML6040A3OG {
             NumberFormat.UInt32BE,   //只能选8/16/32，设置BE，先发送高八位数据   
             false
         )
+        basic.pause(500)
     }
 
     //% help=pins/i2c-read-number blockGap=8 advanced=true
