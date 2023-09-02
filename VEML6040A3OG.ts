@@ -22,7 +22,7 @@ enum ChannelEnum {
 namespace VEML6040A3OG {
 
     //% help=pins/i2c-VEML6040A3OG_Init blockGap=8 advanced=true
-    //% blockId=VEML6040A3OG_Init block="初始化VEML6040A3OG" weight=7
+    //% blockId=VEML6040A3OG_Init block="初始化VEML6040A3OG" weight=1
     //% weight=50 blockGap=8
     export function InitVEML6040A3OG() {
         pins.i2cWriteNumber(
@@ -34,7 +34,7 @@ namespace VEML6040A3OG {
     }
 
     //% help=pins/i2c-read-number blockGap=8 advanced=true
-    //% blockId=VEML6040A3OG_readColorNumber block="读取颜色值|%X色通道" weight=7
+    //% blockId=VEML6040A3OG_readColorNumber block="读取颜色值|%X色通道" weight=2
     //% weight=50 blockGap=8
     export function readColorNumber(x: ChannelEnum): number {
         pins.i2cWriteNumber(
@@ -48,6 +48,11 @@ namespace VEML6040A3OG {
             NumberFormat.UInt16LE, //因为传感器是先发低八位，再发高八位，所以这里要配置LE先读低八位
             false
         )
+
+        if (x == ChannelEnum.i2c_read_b) {
+            DATA += 500
+        }
+
         return DATA
     }
 
