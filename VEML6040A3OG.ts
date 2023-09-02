@@ -18,21 +18,25 @@ enum ChannelEnum {
 /**
  * TM1650 digit Display
  */
-//% weight=100 color=#64C800 icon="\uf136" block="C78465"
-namespace C78465 {
+//% weight=100 color=#64C800 icon="\uf136" block="VEML6040A3OG"
+namespace VEML6040A3OG {
 
-
-    //% help=pins/i2c-read-number blockGap=8 advanced=true
-    //% blockId=C78465_readColorNumber block="读取颜色值|%X色通道" weight=7
+    //% help=pins/i2c-VEML6040A3OG_Init blockGap=8 advanced=true
+    //% blockId=VEML6040A3OG_Init block="初始化VEML6040A3OG" weight=7
     //% weight=50 blockGap=8
-    export function readColorNumber(x: ChannelEnum): number {
+    export function InitVEML6040A3OG() {
         pins.i2cWriteNumber(
             0x10,                    //设备地址为0x10
             0x00000000,              //寄存器地址为00，配置低八位00，高八位00，（最后一个字节00因为函数库问题无法消除，但不影响功能）
             NumberFormat.UInt32BE,   //只能选8/16/32，设置BE，先发送高八位数据   
             false
         )
+    }
 
+    //% help=pins/i2c-read-number blockGap=8 advanced=true
+    //% blockId=VEML6040A3OG_readColorNumber block="读取颜色值|%X色通道" weight=7
+    //% weight=50 blockGap=8
+    export function readColorNumber(x: ChannelEnum): number {
         pins.i2cWriteNumber(
             0x10,
             x,       			   //写入颜色通道

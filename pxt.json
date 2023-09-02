@@ -15,7 +15,7 @@
         "IIC_ADXL345.ts",
         "IIC_24C02.ts",
         "MFRC522.ts",
-        "C78465.ts"
+        "VEML6040A3OG.ts"
     ],
     "testFiles": [
         "test.ts"
