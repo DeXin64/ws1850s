@@ -178,9 +178,16 @@ namespace WS1850S_RFID {
     //% group="读取卡数据"
     //% color=#4B974A
     export function ReadData_manage(): string {
+        // 初始化
+        Init()
+
         let manage_DATA: string
         let m_DATA_1: string = read()
         manage_DATA = m_DATA_1.trim()   //.trim()为js语言去除两端空格的函数
+
+        // RFID外设关闭天线
+        AntennaOFF()
+
         return manage_DATA
     }
 
@@ -460,9 +467,10 @@ namespace WS1850S_RFID {
     //% weight=90 block="写入卡数据|内容%dat"
     //% group="写入卡数据"
     //% color=#4B974A
-    export function write(text: string) {
+    export function write(text: string): void {
         // 初始化
         Init()
+
         let id = writeToCard(text)
 
         while (!id) {
@@ -473,7 +481,11 @@ namespace WS1850S_RFID {
             }
         }
 
-        return getIDNum(uid)
+        getIDNum(uid)
+
+        // RFID外设关闭天线
+        AntennaOFF()
+        // return getIDNum(uid)
     }
     // write卡数据的第一个函数
     //% shim=writeToCard
