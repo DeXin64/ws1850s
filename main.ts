@@ -190,12 +190,23 @@ enum PressureSensorEnum {
     //% block="P3口"
     PIN_3 = 3,
 }
+// 颜色传感器RGBW枚举
+enum ColorSensorEnum {
+    //% block="红色"
+    R = 0x08,
+    //% block="绿色"
+    G = 0x09,
+    //% block="蓝色"
+    B = 0x0A,
+    //% block="白色"
+    W = 0x0b,
+}
 
 /**
  * Custom blocks
  */
 //% weight=100 color=#00CCFF icon="\uf136" block="特萌扩展"
-//% groups='["主机", "电机", "蜂鸣器", "RGB彩灯", "超声波", "红外避障", "光敏", "温湿度", "旋钮", "声音", "碰撞", "循迹", "按键", "摇杆", "红外接收", "压力", "NFC", "压力传感器"]'
+//% groups='["主机", "电机", "蜂鸣器", "RGB彩灯", "超声波", "红外避障", "光敏", "温湿度", "旋钮", "声音", "碰撞", "循迹", "按键", "摇杆", "红外接收", "压力", "NFC", "压力传感器", "颜色传感器"]'
 namespace hicbit {
     /*
     * hicbit initialization, please execute at boot time
@@ -1427,5 +1438,59 @@ namespace hicbit {
 
         adValue = adValue/(3.3/1024)
         return Math.round(adValue);
+    }
+
+    //% weight=90 block="压力传感器|接口%pin|值(0~255)"
+    //% group="压力传感器"
+    //% color=#4B974A
+    export function GetIICPressureSensorValue(pin: PressureSensorEnum): number {
+        let ADCPin: AnalogPin;
+        switch (pin) {
+            case PressureSensorEnum.PIN_0:
+                ADCPin = AnalogPin.P0;
+                break;
+            case PressureSensorEnum.PIN_1:
+                ADCPin = AnalogPin.P1;
+                break;
+            case PressureSensorEnum.PIN_2:
+                ADCPin = AnalogPin.P2;
+                break;
+            case PressureSensorEnum.PIN_3:
+                ADCPin = AnalogPin.P3;
+                break;
+        }
+        let adValue = pins.analogReadPin(ADCPin);
+
+        adValue = adValue/(3.3/1024)
+        return Math.round(adValue);
+    }
+
+    //% weight=90 block="颜色传感器|读取%RGB"
+    //% group="颜色传感器"
+    //% color=#4B974A
+    export function GetIICColorSensorValue(RGB: ColorSensorEnum): number {
+        let data = IIC_Read_Color(RGB)
+
+        if (RGB == ColorSensorEnum.B) {
+            //校准蓝色，在检测蓝色是，蓝色灵敏度值低很多（绿色值反而大）
+            data = data + 500
+        }
+
+        return data
+    }
+    //% shim=IIC_Read_Color
+    function IIC_Read_Color(x: number) {
+        pins.i2cWriteNumber(
+            0x10,
+            x,       			   //写入颜色通道
+            NumberFormat.UInt8BE,
+            true
+        )
+        let DATA = pins.i2cReadNumber(
+            0x10,
+            NumberFormat.UInt16LE, //因为传感器是先发低八位，再发高八位，所以这里要配置LE先读低八位
+            false
+        )
+        return DATA
     }
 }
