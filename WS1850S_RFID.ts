@@ -467,7 +467,7 @@ namespace WS1850S_RFID {
     //% weight=90 block="写入卡数据|内容%dat"
     //% group="写入卡数据"
     //% color=#4B974A
-    export function write(text: string): void {
+    export function SetData(text: string): void {
         // 初始化
         Init()
 
