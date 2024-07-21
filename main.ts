@@ -179,11 +179,23 @@ enum IrProtocol {
     NEC = 1,
 }
 
+// 压力传感器pin口枚举
+enum PressureSensorEnum {
+    //% block="P0口"
+    PIN_0 = 0,
+    //% block="P1口"
+    PIN_1 = 1,
+    //% block="P2口"
+    PIN_2 = 2,
+    //% block="P3口"
+    PIN_3 = 3,
+}
+
 /**
  * Custom blocks
  */
 //% weight=100 color=#00CCFF icon="\uf136" block="特萌扩展"
-//% groups='["主机", "电机", "蜂鸣器", "RGB彩灯", "超声波", "红外避障", "光敏", "温湿度", "旋钮", "声音", "碰撞", "循迹", "按键", "摇杆", "红外接收", "压力", "NFC"]'
+//% groups='["主机", "电机", "蜂鸣器", "RGB彩灯", "超声波", "红外避障", "光敏", "温湿度", "旋钮", "声音", "碰撞", "循迹", "按键", "摇杆", "红外接收", "压力", "NFC", "压力传感器"]'
 namespace hicbit {
     /*
     * hicbit initialization, please execute at boot time
@@ -1390,5 +1402,30 @@ namespace hicbit {
         // let SDL = 120;
         pins.digitalWritePin(DigitalPin.P20, 0);
         return 11;
+    }
+
+    //% weight=90 block="压力传感器|接口%pin|值(0~255)"
+    //% group="压力传感器"
+    //% color=#4B974A
+    export function GetIICPressureSensorValue(pin: PressureSensorEnum): number {
+        let ADCPin: AnalogPin;
+        switch (pin) {
+            case PressureSensorEnum.PIN_0:
+                ADCPin = AnalogPin.P0;
+                break;
+            case PressureSensorEnum.PIN_1:
+                ADCPin = AnalogPin.P1;
+                break;
+            case PressureSensorEnum.PIN_2:
+                ADCPin = AnalogPin.P2;
+                break;
+            case PressureSensorEnum.PIN_3:
+                ADCPin = AnalogPin.P3;
+                break;
+        }
+        let adValue = pins.analogReadPin(ADCPin);
+
+        adValue = adValue/(3.3/1024)
+        return Math.round(adValue);
     }
 }
