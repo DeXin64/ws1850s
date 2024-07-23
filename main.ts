@@ -1440,31 +1440,6 @@ namespace hicbit {
         return Math.round(adValue);
     }
 
-    //% weight=90 block="压力传感器|接口%pin|值(0~255)"
-    //% group="压力传感器"
-    //% color=#4B974A
-    export function GetIICPressureSensorValue(pin: PressureSensorEnum): number {
-        let ADCPin: AnalogPin;
-        switch (pin) {
-            case PressureSensorEnum.PIN_0:
-                ADCPin = AnalogPin.P0;
-                break;
-            case PressureSensorEnum.PIN_1:
-                ADCPin = AnalogPin.P1;
-                break;
-            case PressureSensorEnum.PIN_2:
-                ADCPin = AnalogPin.P2;
-                break;
-            case PressureSensorEnum.PIN_3:
-                ADCPin = AnalogPin.P3;
-                break;
-        }
-        let adValue = pins.analogReadPin(ADCPin);
-
-        adValue = adValue/(3.3/1024)
-        return Math.round(adValue);
-    }
-
     //% weight=90 block="颜色传感器|读取%RGB"
     //% group="颜色传感器"
     //% color=#4B974A
