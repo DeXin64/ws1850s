@@ -10,7 +10,8 @@
     "files": [
         "README.md",
         "main.blocks",
-        "main.ts"
+        "main.ts",
+        "WS1850S_RFID.ts"
     ],
     "testFiles": [
         "test.ts"
