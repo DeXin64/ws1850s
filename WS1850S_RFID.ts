@@ -163,12 +163,12 @@ namespace WS1850S_RFID {
         AntennaOFF()
     }
 
-    //% weight=90 block="版本"
-    //% group="公共"
-    //% color=#4B974A
-    export function SetVersion(): void {
+    // //% weight=90 block="版本"
+    // //% group="公共"
+    // //% color=#4B974A
+    // export function SetVersion(): void {
         
-    }
+    // }
 
     //% weight=90 block="读取卡ID|卡ID2"
     //% group="读取卡数据"
