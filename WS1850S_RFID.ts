@@ -144,15 +144,31 @@ let Version
  * Custom blocks
  */
 //% weight=100 color=#00CCFF icon="\uf136" block="WS1850S_RFID"
-//% groups='["读取卡数据", "写入卡数据"]'
+//% groups='["公共", "读取卡数据", "写入卡数据"]'
 namespace WS1850S_RFID {
+
+    //% weight=90 block="初始化"
+    //% group="公共"
+    //% color=#4B974A
+    export function SetInit(): void {
+        // 初始化
+        Init()
+    }
+
+    //% weight=90 block="外设关闭天线"
+    //% group="公共"
+    //% color=#4B974A
+    export function SetAntennaOFF(): void {
+        // RFID外设关闭天线
+        AntennaOFF()
+    }
 
     //% weight=90 block="读取卡ID|卡ID"
     //% group="读取卡数据"
     //% color=#4B974A
     export function readId(): number {
         // 初始化
-        Init()
+        // Init()
         let [status, Type2] = Request(PICC_REQIDL)  //寻卡+复位应答
 
         if (status != 0) {
@@ -165,7 +181,7 @@ namespace WS1850S_RFID {
         }
 
         // RFID外设关闭天线
-        AntennaOFF()
+        // AntennaOFF()
 
         return getIDNum(uid)
     }
@@ -179,14 +195,14 @@ namespace WS1850S_RFID {
     //% color=#4B974A
     export function ReadData_manage(): string {
         // 初始化
-        Init()
+        // Init()
 
         let manage_DATA: string
         let m_DATA_1: string = read()
         manage_DATA = m_DATA_1.trim()   //.trim()为js语言去除两端空格的函数
 
         // RFID外设关闭天线
-        AntennaOFF()
+        // AntennaOFF()
 
         return manage_DATA
     }
@@ -469,7 +485,7 @@ namespace WS1850S_RFID {
     //% color=#4B974A
     export function SetData(text: string): void {
         // 初始化
-        Init()
+        // Init()
 
         let id = writeToCard(text)
 
@@ -484,7 +500,7 @@ namespace WS1850S_RFID {
         getIDNum(uid)
 
         // RFID外设关闭天线
-        AntennaOFF()
+        // AntennaOFF()
         // return getIDNum(uid)
     }
     // write卡数据的第一个函数
