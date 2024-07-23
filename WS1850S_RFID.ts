@@ -169,7 +169,7 @@ namespace WS1850S_RFID {
     export function readId(): number {
         // 初始化
         // Init()
-        let [status, Type2] = Request(PICC_REQIDL)  //寻卡+复位应答
+        [status, Type2] = Request(PICC_REQIDL)  //寻卡+复位应答
 
         if (status != 0) {
             return null
