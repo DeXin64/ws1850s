@@ -18,127 +18,6 @@ Pin25-30	D1-D6:	GND
 * * 功能描述：Mifare1 寻卡→防冲突→选卡→读写 接口
 
 */
-//MF522命令字
-let PCD_IDLE = 0x00               //NO action;取消当前命令
-let PCD_AUTHENT = 0x0E               //验证密钥
-let PCD_RECEIVE = 0x08               //接收数据
-let PCD_TRANSMIT = 0x04               //发送数据
-let PCD_TRANSCEIVE = 0x0C               //发送并接收数据
-let PCD_RESETPHASE = 0x0F               //复位
-let PCD_CALCCRC = 0x03               //CRC计算
-
-//Mifare_One卡片命令字
-let PICC_REQIDL = 0x26               //寻天线区内未进入休眠状态
-let PICC_REQALL = 0x52               //寻天线区内全部卡
-let PICC_ANTICOLL = 0x93               //防冲撞
-let PICC_SElECTTAG = 0x95              //选卡93
-let PICC_AUTHENT1A = 0x60               //验证A密钥
-let PICC_AUTHENT1B = 0x61               //验证B密钥
-let PICC_READ = 0x30               //读块
-let PICC_WRITE = 0xA0               //写块
-let PICC_DECREMENT = 0xC0               //扣款
-let PICC_INCREMENT = 0xC1               //充值
-let PICC_RESTORE = 0xC2               //调块数据到缓冲区
-let PICC_TRANSFER = 0xB0               //保存缓冲区中数据
-let PICC_HALT = 0x50               //休眠
-
-
-//和MF522通讯时返回的错误代码
-let MI_OK = 0
-let MI_NOTAGERR = (-1)  //1
-let MI_ERR = (-2)  //2
-
-//MF522 FIFO长度定义
-/////////////////////////////////////////////////////////////////////
-let DEF_FIFO_LENGTH = 64                 //FIFO size=64byte
-
-//------------------MFRC522寄存器---------------
-//Page 0:Command and Status
-let Reserved00 = 0x00
-let CommandReg = 0x01
-let CommIEnReg = 0x02
-let DivlEnReg = 0x03
-let CommIrqReg = 0x04
-let DivIrqReg = 0x05
-let ErrorReg = 0x06
-let Status1Reg = 0x07
-let Status2Reg = 0x08
-let FIFODataReg = 0x09
-let FIFOLevelReg = 0x0A
-let WaterLevelReg = 0x0B
-let ControlReg = 0x0C
-let BitFramingReg = 0x0D
-let CollReg = 0x0E
-let Reserved01 = 0x0F
-//Page 1:Command     
-let Reserved10 = 0x10
-let ModeReg = 0x11
-let TxModeReg = 0x12
-let RxModeReg = 0x13
-let TxControlReg = 0x14
-let TxAutoReg = 0x15
-let TxSelReg = 0x16
-let RxSelReg = 0x17
-let RxThresholdReg = 0x18
-let DemodReg = 0x19
-let Reserved11 = 0x1A
-let Reserved12 = 0x1B
-let MifareReg = 0x1C
-let Reserved13 = 0x1D
-let Reserved14 = 0x1E
-let SerialSpeedReg = 0x1F
-//Page 2:CFG    
-let Reserved20 = 0x20
-let CRCResultRegM = 0x21
-let CRCResultRegL = 0x22
-let Reserved21 = 0x23
-let ModWidthReg = 0x24
-let Reserved22 = 0x25
-let RFCfgReg = 0x26
-let GsNReg = 0x27
-let CWGsPReg = 0x28
-let ModGsPReg = 0x29
-let TModeReg = 0x2A
-let TPrescalerReg = 0x2B
-let TReloadRegH = 0x2C
-let TReloadRegL = 0x2D
-let TCounterValueRegH = 0x2E
-let TCounterValueRegL = 0x2F
-//Page 3:TestRegister     
-let Reserved30 = 0x30
-let TestSel1Reg = 0x31
-let TestSel2Reg = 0x32
-let TestPinEnReg = 0x33
-let TestPinValueReg = 0x34
-let TestBusReg = 0x35
-let AutoTestReg = 0x36
-let VersionReg = 0x37
-let AnalogTestReg = 0x38
-let TestDAC1Reg = 0x39
-let TestDAC2Reg = 0x3A
-let TestADCReg = 0x3B
-let Reserved31 = 0x3C
-let Reserved32 = 0x3D
-let Reserved33 = 0x3E
-let Reserved34 = 0x3F
-//-----------------------------------------------
-//变量
-let Type2 = 0
-const BlockAdr: number[] = [8, 9, 10]
-let temp = 0
-let val = 0
-let uid: number[] = []
-let returnLen = 0
-let returnData: number[] = []
-let status = 0
-let u = 0
-let ChkSerNum = 0
-let returnBits: any = null
-let recvData: number[] = []
-let d = 0
-let MAX_LEN = 16
-let Key = [255, 255, 255, 255, 255, 255]
-let Version
 
 /**
  * Custom blocks
@@ -146,7 +25,129 @@ let Version
 //% weight=100 color=#00CCFF icon="\uf136" block="WS1850S_RFID"
 //% groups='["公共", "读取卡数据", "写入卡数据"]'
 namespace WS1850S_RFID {
+    //MF522命令字
+    let PCD_IDLE = 0x00               //NO action;取消当前命令
+    let PCD_AUTHENT = 0x0E               //验证密钥
+    let PCD_RECEIVE = 0x08               //接收数据
+    let PCD_TRANSMIT = 0x04               //发送数据
+    let PCD_TRANSCEIVE = 0x0C               //发送并接收数据
+    let PCD_RESETPHASE = 0x0F               //复位
+    let PCD_CALCCRC = 0x03               //CRC计算
 
+    //Mifare_One卡片命令字
+    let PICC_REQIDL = 0x26               //寻天线区内未进入休眠状态
+    let PICC_REQALL = 0x52               //寻天线区内全部卡
+    let PICC_ANTICOLL = 0x93               //防冲撞
+    let PICC_SElECTTAG = 0x95              //选卡93
+    let PICC_AUTHENT1A = 0x60               //验证A密钥
+    let PICC_AUTHENT1B = 0x61               //验证B密钥
+    let PICC_READ = 0x30               //读块
+    let PICC_WRITE = 0xA0               //写块
+    let PICC_DECREMENT = 0xC0               //扣款
+    let PICC_INCREMENT = 0xC1               //充值
+    let PICC_RESTORE = 0xC2               //调块数据到缓冲区
+    let PICC_TRANSFER = 0xB0               //保存缓冲区中数据
+    let PICC_HALT = 0x50               //休眠
+
+
+    //和MF522通讯时返回的错误代码
+    let MI_OK = 0
+    let MI_NOTAGERR = (-1)  //1
+    let MI_ERR = (-2)  //2
+
+    //MF522 FIFO长度定义
+    /////////////////////////////////////////////////////////////////////
+    let DEF_FIFO_LENGTH = 64                 //FIFO size=64byte
+
+    //------------------MFRC522寄存器---------------
+    //Page 0:Command and Status
+    let Reserved00 = 0x00
+    let CommandReg = 0x01
+    let CommIEnReg = 0x02
+    let DivlEnReg = 0x03
+    let CommIrqReg = 0x04
+    let DivIrqReg = 0x05
+    let ErrorReg = 0x06
+    let Status1Reg = 0x07
+    let Status2Reg = 0x08
+    let FIFODataReg = 0x09
+    let FIFOLevelReg = 0x0A
+    let WaterLevelReg = 0x0B
+    let ControlReg = 0x0C
+    let BitFramingReg = 0x0D
+    let CollReg = 0x0E
+    let Reserved01 = 0x0F
+    //Page 1:Command     
+    let Reserved10 = 0x10
+    let ModeReg = 0x11
+    let TxModeReg = 0x12
+    let RxModeReg = 0x13
+    let TxControlReg = 0x14
+    let TxAutoReg = 0x15
+    let TxSelReg = 0x16
+    let RxSelReg = 0x17
+    let RxThresholdReg = 0x18
+    let DemodReg = 0x19
+    let Reserved11 = 0x1A
+    let Reserved12 = 0x1B
+    let MifareReg = 0x1C
+    let Reserved13 = 0x1D
+    let Reserved14 = 0x1E
+    let SerialSpeedReg = 0x1F
+    //Page 2:CFG    
+    let Reserved20 = 0x20
+    let CRCResultRegM = 0x21
+    let CRCResultRegL = 0x22
+    let Reserved21 = 0x23
+    let ModWidthReg = 0x24
+    let Reserved22 = 0x25
+    let RFCfgReg = 0x26
+    let GsNReg = 0x27
+    let CWGsPReg = 0x28
+    let ModGsPReg = 0x29
+    let TModeReg = 0x2A
+    let TPrescalerReg = 0x2B
+    let TReloadRegH = 0x2C
+    let TReloadRegL = 0x2D
+    let TCounterValueRegH = 0x2E
+    let TCounterValueRegL = 0x2F
+    //Page 3:TestRegister     
+    let Reserved30 = 0x30
+    let TestSel1Reg = 0x31
+    let TestSel2Reg = 0x32
+    let TestPinEnReg = 0x33
+    let TestPinValueReg = 0x34
+    let TestBusReg = 0x35
+    let AutoTestReg = 0x36
+    let VersionReg = 0x37
+    let AnalogTestReg = 0x38
+    let TestDAC1Reg = 0x39
+    let TestDAC2Reg = 0x3A
+    let TestADCReg = 0x3B
+    let Reserved31 = 0x3C
+    let Reserved32 = 0x3D
+    let Reserved33 = 0x3E
+    let Reserved34 = 0x3F
+    //-----------------------------------------------
+    //变量
+    let Type2 = 0
+    const BlockAdr: number[] = [8, 9, 10]
+    let temp = 0
+    let val = 0
+    let uid: number[] = []
+    let returnLen = 0
+    let returnData: number[] = []
+    let status = 0
+    let u = 0
+    let ChkSerNum = 0
+    let returnBits: any = null
+    let recvData: number[] = []
+    let d = 0
+    let MAX_LEN = 16
+    let Key = [255, 255, 255, 255, 255, 255]
+    let Version
+
+    
     //% weight=90 block="初始化"
     //% group="公共"
     //% color=#4B974A
@@ -163,12 +164,12 @@ namespace WS1850S_RFID {
         AntennaOFF()
     }
 
-    // //% weight=90 block="版本"
-    // //% group="公共"
-    // //% color=#4B974A
-    // export function SetVersion(): void {
+    //% weight=90 block="版本2"
+    //% group="公共"
+    //% color=#4B974A
+    export function SetVersion(): void {
         
-    // }
+    }
 
     //% weight=90 block="读取卡ID|卡ID2"
     //% group="读取卡数据"
