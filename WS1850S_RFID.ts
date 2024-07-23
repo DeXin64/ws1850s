@@ -170,6 +170,13 @@ namespace WS1850S_RFID {
         
     }
 
+    //% weight=90 block="读取卡ID|卡ID2"
+    //% group="读取卡数据"
+    //% color=#4B974A
+    export function readId2(): number {
+        return status
+    }
+
     //% weight=90 block="读取卡ID|卡ID"
     //% group="读取卡数据"
     //% color=#4B974A

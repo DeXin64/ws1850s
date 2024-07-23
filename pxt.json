@@ -11,12 +11,7 @@
         "README.md",
         "main.blocks",
         "main.ts",
-        "WS1850S_RFID.ts",
-        "IIC_1650.ts",
-        "IIC_ADXL345.ts",
-        "IIC_24C02.ts",
-        "MFRC522.ts",
-        "VEML6040A3OG.ts"
+        "WS1850S_RFID.ts"
     ],
     "testFiles": [
         "test.ts"
