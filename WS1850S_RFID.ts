@@ -202,6 +202,11 @@ namespace WS1850S_RFID {
         let id = writeToCard(data)
 
         while (!id) {
+            if (!checkRFIDStatus) {
+                // 卡状态异常
+                break
+            }
+
             let id = writeToCard(data)
 
             if (id != undefined) {
@@ -308,6 +313,11 @@ namespace WS1850S_RFID {
     
         let p = 2000
         while (true) {
+            if (!checkRFIDStatus) {
+                // 卡状态异常
+                break
+            }
+            
             n = IIC_Read(CommIrqReg)
             p--
             if (~(p != 0 && ~(n & 0x01) && ~(n & waitIRQ))) {
@@ -397,6 +407,12 @@ namespace WS1850S_RFID {
     function read(): string {               //数据长度48个字节
         let text = readFromCard()
         while (!text) {
+
+            if (!checkRFIDStatus) {
+                // 卡状态异常
+                break
+            }
+
             let text = readFromCard()
 
             if (text != '') {
@@ -517,6 +533,11 @@ namespace WS1850S_RFID {
         let t = 0xFF
 
         while (true) {
+            if (!checkRFIDStatus) {
+                // 卡状态异常
+                break
+            }
+
             let v = IIC_Read(DivIrqReg)
             t--
             if (!(t != 0 && !(v & 0x04))) {
@@ -601,6 +622,22 @@ namespace WS1850S_RFID {
                 serial.writeLine("Data written")
             }
         }
+    }
+
+    // 判断卡状态是否正常
+    function checkRFIDStatus(): boolean {
+        [status, Type2] = Request(PICC_REQIDL)  //寻卡+复位应答
+
+        if (status != 0) {
+            return false
+        }
+        [status, uid] = AvoidColl()
+
+        if (status != 0) {
+            return false
+        }
+
+        return true
     }
 
     function readId2(): [number, string] {
