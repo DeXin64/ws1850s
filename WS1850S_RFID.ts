@@ -313,11 +313,6 @@ namespace WS1850S_RFID {
     
         let p = 2000
         while (true) {
-            if (!checkRFIDStatus()) {
-                // 卡状态异常
-                break
-            }
-
             n = IIC_Read(CommIrqReg)
             p--
             if (~(p != 0 && ~(n & 0x01) && ~(n & waitIRQ))) {
