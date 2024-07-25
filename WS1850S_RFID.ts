@@ -164,6 +164,13 @@ namespace WS1850S_RFID {
         AntennaON()
     }
 
+    //% weight=90 block="关闭RFID"
+    //% group="公共"
+    //% color=#4B974A
+    export function antennaOFF() {
+        ClearBits(TxControlReg, 0x03) // 0x14控制天线驱动器管脚TX1和TX2的寄存器
+    }
+
     //% weight=90 block="版本2"
     //% group="公共"
     //% color=#4B974A
@@ -206,6 +213,12 @@ namespace WS1850S_RFID {
     function SetBits(reg: number, mask: number) {
         let tmp = IIC_Read(reg)
         IIC_Write(reg, (tmp | mask))
+    }
+
+    // 设置禁止天线发射载波13.56Mhz寄存器函数
+    function ClearBits(reg: number, mask: number) {
+        let tmp = IIC_Read(reg)
+        IIC_Write(reg, tmp & (~mask))
     }
 
     function readId2(): [number, string] {
