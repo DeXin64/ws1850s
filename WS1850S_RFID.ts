@@ -202,7 +202,7 @@ namespace WS1850S_RFID {
         let id = writeToCard(data)
 
         while (!id) {
-            if (!checkRFIDStatus) {
+            if (!checkRFIDStatus()) {
                 // 卡状态异常
                 break
             }
@@ -215,7 +215,7 @@ namespace WS1850S_RFID {
         }
     }
 
-    //% weight=90 block="版本3"
+    //% weight=90 block="版本 20240725 23:17"
     //% group="公共"
     //% color=#4B974A
     export function getVersion(): string {
@@ -313,11 +313,11 @@ namespace WS1850S_RFID {
     
         let p = 2000
         while (true) {
-            if (!checkRFIDStatus) {
+            if (!checkRFIDStatus()) {
                 // 卡状态异常
                 break
             }
-            
+
             n = IIC_Read(CommIrqReg)
             p--
             if (~(p != 0 && ~(n & 0x01) && ~(n & waitIRQ))) {
@@ -408,7 +408,7 @@ namespace WS1850S_RFID {
         let text = readFromCard()
         while (!text) {
 
-            if (!checkRFIDStatus) {
+            if (!checkRFIDStatus()) {
                 // 卡状态异常
                 break
             }
@@ -533,7 +533,7 @@ namespace WS1850S_RFID {
         let t = 0xFF
 
         while (true) {
-            if (!checkRFIDStatus) {
+            if (!checkRFIDStatus()) {
                 // 卡状态异常
                 break
             }
