@@ -210,7 +210,7 @@ namespace WS1850S_RFID {
         }
     }
 
-    //% weight=90 block="版本2"
+    //% weight=90 block="版本3"
     //% group="公共"
     //% color=#4B974A
     export function getVersion(): string {
@@ -409,13 +409,13 @@ namespace WS1850S_RFID {
     function readFromCard(): string {
         let [status, Type2] = Request(PICC_REQIDL)     //寻卡+复位应答
         if (status != 0) {
-            return null
+            return ''
         }
 
         [status, uid] = AvoidColl()     //防多卡冲突机制
 
         if (status != 0) {
-            return null
+            return ''
         }
 
         let id = getIDNum(uid)
