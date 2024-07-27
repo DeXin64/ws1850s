@@ -215,12 +215,12 @@ namespace WS1850S_RFID {
         }
     }
 
-    //% weight=90 block="版本 20240725 23:17"
+    //% weight=90 block="版本 20240727 11:06"
     //% group="公共"
     //% color=#4B974A
     export function getVersion(): string {
-        [status, version] = readId2()
-        return version
+        let text = readFromCard()
+        return text
     }
 
     /*********************************** 共用方法 ****************************************/
@@ -622,15 +622,14 @@ namespace WS1850S_RFID {
     // 判断卡状态是否正常
     function checkRFIDStatus(): boolean {
         [status, Type2] = Request(PICC_REQIDL)  //寻卡+复位应答
-
         if (status != 0) {
             return false
         }
-        [status, uid] = AvoidColl()
 
-        if (status != 0) {
-            return false
-        }
+        // [status, uid] = AvoidColl()
+        // if (status != 0) {
+        //     return false
+        // }
 
         return true
     }
