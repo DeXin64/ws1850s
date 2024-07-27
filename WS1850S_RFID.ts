@@ -215,7 +215,7 @@ namespace WS1850S_RFID {
         }
     }
 
-    //% weight=90 block="版本 20240727 11:16"
+    //% weight=90 block="版本 20240727 11:28"
     //% group="公共"
     //% color=#4B974A
     export function getVersion(): string {
@@ -420,13 +420,13 @@ namespace WS1850S_RFID {
     function readFromCard(): string {
         let [status, Type2] = Request(PICC_REQIDL)     //寻卡+复位应答
         if (status != 0) {
-            return 'Request status is ' + status
+            return 'ReqS=' + status + ',T2=' + Type2
         }
 
         [status, uid] = AvoidColl()     //防多卡冲突机制
 
         if (status != 0) {
-            return 'AvoidColl status is ' + status
+            return 'ReqS=' + status + ',T2=' + Type2 + ', AvdS=' + status + ',uid=' + uid
         }
 
         let id = getIDNum(uid)
@@ -448,7 +448,7 @@ namespace WS1850S_RFID {
                 }
             }
         } else {
-            return 'Authent status is ' + status
+            return 'ReqS=' + status + ',T2=' + Type2 + ', AvdS=' + status + ',uid=' + uid + ',AuthS=' + status
         }
         Crypto1Stop()
         return text_read
