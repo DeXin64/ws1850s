@@ -358,7 +358,7 @@ namespace WS1850S_RFID {
     function ReadData_manage(): string {
         let manage_DATA: string
         let m_DATA_1: string = read()
-        manage_DATA = m_DATA_1 != null ? m_DATA_1.trim() : m_DATA_1   //.trim()为js语言去除两端空格的函数
+        manage_DATA = m_DATA_1 != null ? m_DATA_1.trim() : 'NULL'   //.trim()为js语言去除两端空格的函数
         return manage_DATA
     }
 
