@@ -492,7 +492,7 @@ namespace WS1850S_RFID {
         let id = writeToCard(text)
 
         let flag = 1;
-        while (!id && flag <= 5) {
+        while (!id && flag <= 3) {
             let id = writeToCard(text)
 
             flag += 1
