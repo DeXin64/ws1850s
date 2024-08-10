@@ -491,14 +491,12 @@ namespace WS1850S_RFID {
     function write(text: string) {
         let id = writeToCard(text)
 
-        // while (!id) {
-        //     let id = writeToCard(text)
+        let flag = 1;
+        while (!id && flag <= 5) {
+            let id = writeToCard(text)
 
-        //     if (id != null) {
-        //         return
-        //     }
-        // }
-        return 
+            flag += 1
+        }
     }
     //---------write卡数据的第一个函数------------------------//
     function writeToCard(txt: string): number {
