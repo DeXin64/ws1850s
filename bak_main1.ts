@@ -1,6 +1,6 @@
 
 
-// //% weight=10000 color=#357DF8 icon="\uf3fd" block="特萌扩展"
+// //% weight=10000 color=#357DF8 icon="\uf3fd" block="海客扩展"
 // //% groups=['NFC【IIC】', '其他']
 // namespace temeng {
 

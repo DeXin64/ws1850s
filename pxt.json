@@ -1,7 +1,7 @@
 {
-    "name": "特萌Microbit(IIC版)",
+    "name": "海客Microbit(IIC版)",
     "version": "0.0.0",
-    "description": "特萌Microbit支持IIC版本",
+    "description": "海客Microbit支持IIC版本",
     "dependencies": {
         "core": "*",
         "radio": "*",
@@ -10,8 +10,7 @@
     "files": [
         "README.md",
         "main.blocks",
-        "main.ts",
-        "WS1850S_RFID.ts"
+        "main.ts"
     ],
     "testFiles": [
         "test.ts"
