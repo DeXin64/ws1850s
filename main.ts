@@ -1512,7 +1512,7 @@ namespace hicbit {
     function setBufferMode(pin: DigitalPin, mode: number) {
     }
 
-    //% weight=90 block="压力传感器|接口%pin|值(0~255)"
+    //% weight=90 block="压力传感器|接口%pin|值[0~255]"
     //% group="压力传感器"
     //% color=#4B974A
     export function GetIICPressureSensorValue(pin: PressureSensorEnum): number {
@@ -1533,8 +1533,8 @@ namespace hicbit {
         }
         let adValue = pins.analogReadPin(ADCPin);
 
-        adValue = (adValue/1024)*255
-        return Math.round(adValue);
+        let data = Math.round(adValue*255/1024)
+        return data;
     }
 
     //% weight=90 block="颜色传感器|读取%RGB"
