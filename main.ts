@@ -1533,7 +1533,7 @@ namespace hicbit {
         }
         let adValue = pins.analogReadPin(ADCPin);
 
-        adValue = adValue*(3.3/1024)
+        adValue = (adValue/1024)*255
         return Math.round(adValue);
     }
 
@@ -1550,7 +1550,13 @@ namespace hicbit {
 
         return data
     }
-    function IIC_Read_Color(x: number) : number  {
+    function IIC_Read_Color(x: number): number  {
+        pins.i2cWriteNumber(
+            0x10,
+            0x00000000,
+            NumberFormat.UInt32BE,
+            false
+        )
         pins.i2cWriteNumber(
             0x10,
             x,       			   //写入颜色通道
@@ -2090,7 +2096,7 @@ namespace hicbit {
         else { hicbit.SetLCDString(6, 1, "Version: unknown") }
     }
 
-    //% weight=90 block="初始化RFID"
+    //% weight=90 block="打开RFID"
     //% group="RFID"
     //% color=#4B974A
     export function RFID_Init() {
