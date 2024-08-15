@@ -1475,9 +1475,8 @@ namespace hicbit {
         return hex;
     }
 
-    let strip = pins.createBuffer(9);
     //let strip: Buffer=hex`000000 000000 000000`;
-    //% weight=98 block="RGB彩灯|接口%pin|彩灯%light|红%red|绿%green|蓝%blue"
+    //% weight=98 block="RGB-彩灯|接口%pin|彩灯%light|红%red|绿%green|蓝%blue"
     //% inlineInputMode=inline
     //% group="RGB彩灯"
     //% red.min=0 red.max=255
@@ -1485,6 +1484,7 @@ namespace hicbit {
     //% blue.min=0 blue.max=255
     //% color=#CD9B9B
     export function SetRGBLight(pin: SensorEnum, light: LEDEnum, red: number, green: number, blue: number) {
+        let strip = pins.createBuffer(9);
         strip[light * 3 + 0] = green;
         strip[light * 3 + 1] = red;
         strip[light * 3 + 2] = blue;
