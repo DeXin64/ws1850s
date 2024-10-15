@@ -149,7 +149,7 @@ namespace WS1850S_RFID {
     function IIC_Write(adr: number, val: number) {
         let val_1 = ((adr << 8) | val)
         pins.i2cWriteNumber(
-            0,
+            0x28,
             val_1,
             NumberFormat.UInt16BE,
             false
